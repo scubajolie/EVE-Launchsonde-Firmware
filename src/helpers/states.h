@@ -23,72 +23,67 @@ enum State_t {
     FILE_SYSTEM_FAIL = -9       // File system failed to initialize properly
 };
 
+
 State_t previousState;
 
-static void getStateString(char* outStr, State_t s) {
+
+static int GetStateInt(State_t s) {
     switch(s) {
         case BOOTING:
-            strcpy(outStr, "BOOTING");
+            return static_cast<int8_t>(State_t::BOOTING);
             break;
         case STANDBY:
-            strcpy(outStr, "STANDBY");
+            return static_cast<int8_t>(State_t::STANDBY);
             break;
         case READY:
-            strcpy(outStr, "READY");
+            return static_cast<int8_t>(State_t::READY);
             break;
         case ARMED:
-            strcpy(outStr, "ARMED");
+            return static_cast<int8_t>(State_t::ARMED);
             break;
         case LAUNCHING:
-            strcpy(outStr, "LAUNCHING");
+            return static_cast<int8_t>(State_t::LAUNCHING);
             break;
         case FLIGHT:
-            strcpy(outStr, "FLIGHT");
+            return static_cast<int8_t>(State_t::FLIGHT);
             break;
         case RECOVERY:
-            strcpy(outStr, "RECOVERY");
+            return static_cast<int8_t>(State_t::RECOVERY);
             break;
         case IMU_RECORDING:
-            strcpy(outStr, "IMU_RECORDING");
+            return static_cast<int8_t>(State_t::IMU_RECORDING);
             break;
         case RADIO_FAIL:
-            strcpy(outStr, "RADIO_FAIL");
+            return static_cast<int8_t>(State_t::RADIO_FAIL);
             break;
         case GPS_FAIL:
-            strcpy(outStr, "GPS_FAIL");
+            return static_cast<int8_t>(State_t::GPS_FAIL);
             break;
         case ALT_FAIL:
-            strcpy(outStr, "ALT_FAIL");
+            return static_cast<int8_t>(State_t::ALT_FAIL);
             break;
         case IMU_FAIL:
-            strcpy(outStr, "IMU_FAIL");
+            return static_cast<int8_t>(State_t::IMU_FAIL);
             break;
         case SHT_FAIL:
-            strcpy(outStr, "SHT_FAIL");
+            return static_cast<int8_t>(State_t::SHT_FAIL);
             break;
         case IGN_FAIL:
-            strcpy(outStr, "IGN_FAIL");
+            return static_cast<int8_t>(State_t::IGN_FAIL);
             break;
         case LOW_BATT:
-            strcpy(outStr, "LOW_BATT");
+            return static_cast<int8_t>(State_t::LOW_BATT);
             break;
         default:
-            strcpy(outStr, "DINGUS");
+            Serial.println("Invalid State");
             break;
     }
 }
 
+
+
 static void setLaunchsondeState(State_t s) {
     previousState = (State_t) data.state;
-    data.state = s;
-    char msgBuf[64];
-    char stateBuf[32];
-    getStateString(stateBuf, s);
-    sprintf(msgBuf, "Setting launchsonde state to: %s", stateBuf);
-
-    #ifdef DIAGNOSTIC_MODE
-        Serial.println(msgBuf); // DEBUG
-    #endif
-    // sendDiagnosticData(INFO, msgBuf); //Broken. Requires further testing
+    data.state = s;                         //send state to groundstation
     // TODO: switch-case with the state and set LED color based off state (See RGBDiagnostics enum)
 }

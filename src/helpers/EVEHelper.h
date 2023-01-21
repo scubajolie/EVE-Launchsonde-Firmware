@@ -6,6 +6,7 @@ const PROGMEM byte RECEIVER_UUID = 0x00; // Default receiver UUID is 0x00
 
 #define COUNTDOWN_TIME 10 // s
 #define SAMPLE_TIME 50 // ms
+#define LOG_TIME 5000 // 1 log for every 10 samples
 
 // Telemetry packet helper
 #include "telemetry.h"

@@ -35,7 +35,7 @@ void setup() {
     initRadio();
     initGPS();
     // initBNO055();
-    initBMP388();
+    // initBMP388(); // altimeter
     initSHT31();
 
     setLaunchsondeState(STANDBY); // System initialized successfully and is awaiting sensor calibration
@@ -69,6 +69,7 @@ void loop() {
 	strip.show();
 
 	static long unsigned int _lastSample = 0;
+    static long unsigned int _lastLog = 0;
 	if (millis() > _lastSample+SAMPLE_TIME) {
 		_lastSample = millis();
 		pollGPS();
@@ -79,12 +80,22 @@ void loop() {
         sendTelemetryData(); // Broken, needs more testing
 	}
 
+    if(millis() > _lastLog+LOG_TIME) {
+        _lastLog = millis();
+        // msg = getLogLevelString()
+        sendDiagnosticData(TRACE, "Everything is Normal");
+    }
+
     if (data.state == STANDBY && checkSensorsReady()) { // Check if sensors are calibrated
         setLaunchsondeState(READY);
     }
     else {
-        if (data.state != previousState) // Check if state has changed
+        // Check if state has changed
+        if (data.state != previousState) {
             setLaunchsondeState(previousState);
+            //sendState( static_cast<State_t>( data.state ) );      // also works!!
+            sendState(State_t(data.state));
+        }
     }
 
     if (currentMode == DIAGNOSTIC_MODE) {

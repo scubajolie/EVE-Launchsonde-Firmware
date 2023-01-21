@@ -1,9 +1,10 @@
 #include <LoRa.h>
 
 enum PacketType {
-    TELEMETRY_PACKET,
-    LOG_PACKET,
-    COMMAND_PACKET
+    TELEMETRY_PACKET, // 1
+    LOG_PACKET,       // 2
+    COMMAND_PACKET,   // 3
+    STATE_PACKET      // 4
 };
 
 static void initRadio() {
@@ -60,9 +61,19 @@ static void sendDiagnosticData(LogLevel level, char* msg) {
     LoRa.beginPacket();
     LoRa.write(UUID);
     LoRa.write(RECEIVER_UUID);
-    LoRa.write(LOG_PACKET);
-    LoRa.write((byte) level);
-    LoRa.print(msg);
+    LoRa.write(LOG_PACKET);     // packet type
+    LoRa.write((byte) level);   // diagnostic code
+    LoRa.print(msg);            // diagnostic message
+    LoRa.endPacket();
+    LoRa.receive();
+}
+
+static void sendState(State_t s) {
+    LoRa.beginPacket();
+    LoRa.write(UUID);
+    LoRa.write(RECEIVER_UUID);
+    LoRa.write(STATE_PACKET);
+    LoRa.write((int8_t) s);
     LoRa.endPacket();
     LoRa.receive();
 }
@@ -82,3 +93,4 @@ static void radioCallback(int packetSize) {
     executeCommand((Command) cmdIdent, cmdMsg); // Grab command identifier from radio packet and execute appropriate command
     //Additional processing for command messages???
 }
+
