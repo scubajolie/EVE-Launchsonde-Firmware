@@ -1,6 +1,8 @@
 #ifndef EVE_BATTERY_H
 #define EVE_BATTERY_H
 
+#include <telemetry.h>
+
 #define BATT_VOLTAGE_THRESHOLD 2.5 // V
 
 bool checkBattVoltage() {

@@ -2,6 +2,17 @@
 #define EVE_TELEMETRY_H
 
 #include <stdint.h>
+#include <Arduino.h>
+
+#define COUNTDOWN_TIME 10 // s
+#define SAMPLE_TIME 50 // ms
+#define LOG_TIME 500 // 1 log for every 10 samples
+
+extern const PROGMEM char UUID_FILENAME[9];
+extern byte UUID; // Default UUID is 0xFF to indicate no UUID is set yet
+extern bool isUUIDConfig;
+extern const PROGMEM byte RECEIVER_UUID; // Default receiver UUID is 0x00
+
 
 struct Telemetry {
     float voltage;              // Battery voltage in V
@@ -43,6 +54,13 @@ struct Telemetry {
     float humidity;              // % from the SHT31-D sensor
     int8_t state;                // State reported by the launchsonde.
     uint8_t packetSize;         // The size of the telemetry packet. Used as a debug tool for ground station/launchsonde comms.
-} data;
+};
+
+extern Telemetry data;
+
+void printTelemetryData();
+
+void printBaseStationTelemetry();
+
 
 #endif

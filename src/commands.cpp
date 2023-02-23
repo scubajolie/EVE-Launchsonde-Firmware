@@ -5,7 +5,6 @@
 #include <telemetry.h>
 #include <string.h>
 #include <pins.h>
-#include <EVEHelper.h>
 #include <bmp388.h>
 #include <bno055.h>
 #include <sht31d.h>

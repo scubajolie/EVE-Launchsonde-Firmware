@@ -4,7 +4,6 @@
 #include <SPI.h>
 #include <pins.h>
 #include <dotstar.h>
-#include <EVEHelper.h>
 #include <telemetry.h>
 #include <commands.h>
 

@@ -1,10 +1,21 @@
+#include <stdio.h>
 #include <pins.h>
 #include <SPI.h>
 #include <SD.h>
-#include <EVEHelper.h>
+#include <modes.h>
+#include <dotstar.h>
+#include <commands.h>
+
 #include <LoRa.h>
 #include <radio.h>
-#include <dotstar.h>
+#include <gps.h>
+
+
+#include <bmp388.h>
+#include <bno055.h>
+#include <sht31d.h>
+
+#include <telemetry.h>
 
 // ===========================
 // === PROTOTYPE FUNCTIONS ===
@@ -78,8 +89,8 @@ void loop() {
     // else checkBattVoltage(); // If in DIAGNOSTIC mode, check the battery voltage anyways, but do not block code if its low
 
 	// Set the NeoPixel to always be green when in FLIGHT mode
-	strip.setPixelColor(0, currentMode == DIAGNOSTIC_MODE ? BLUE : GREEN);
-	strip.show();
+	EVEstrip.setPixelColor(0, currentMode == DIAGNOSTIC_MODE ? BLUE : GREEN);
+	EVEstrip.show();
 
 	static long unsigned int _lastSample = 0;
     static long unsigned int _lastLog = 0;
