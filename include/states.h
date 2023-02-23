@@ -1,3 +1,10 @@
+#ifndef EVE_STATES_H
+#define EVE_STATES_H
+
+#include <stdint.h>
+#include <telemetry.h>
+#include <SPI.h>
+
 enum State_t {
     // Nominal states
     BOOTING,                    // Package is initializing
@@ -27,7 +34,7 @@ enum State_t {
 State_t previousState;
 
 
-static int GetStateInt(State_t s) {
+int GetStateInt(State_t s) {
     switch(s) {
         case BOOTING:
             return static_cast<int8_t>(State_t::BOOTING);
@@ -76,14 +83,19 @@ static int GetStateInt(State_t s) {
             break;
         default:
             Serial.println("Invalid State");
+            return -1;
             break;
     }
+
+    return -1;
 }
 
 
 
-static void setLaunchsondeState(State_t s) {
+void setLaunchsondeState(State_t s) {
     previousState = (State_t) data.state;
     data.state = s;                         //send state to groundstation
     // TODO: switch-case with the state and set LED color based off state (See RGBDiagnostics enum)
 }
+
+#endif

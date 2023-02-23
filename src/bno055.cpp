@@ -1,6 +1,11 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
+#include <bno055.h>
+#include <pins.h>
+#include <dotstar.h>
+#include <states.h>
+#include <telemetry.h>
 
 // IMU Instantiations
 Adafruit_BNO055 bno = Adafruit_BNO055(-1, 0x28);
@@ -8,7 +13,7 @@ adafruit_bno055_offsets_t offsets; //struct for the calibration offsets to be sa
 uint8_t sysCal, gyroCal, accelCal, magCal = 0;
 bool calDataLoaded;
 
-static void initBNO055() {
+void initBNO055() {
     Serial.print("Initializing IMU..."); //DEBUG
     pinMode(BNO_RST_PIN, OUTPUT);
     pinMode(BNO_RST_PIN, HIGH);
@@ -24,7 +29,7 @@ static void initBNO055() {
     Serial.println("done!"); //DEBUG
 }
 
-static void pollBNO055() {
+void pollBNO055() {
     bno.getCalibration(&data.sysCal, &data.gyroCal, &data.accelCal, &data.magCal);
     if (bno.isFullyCalibrated()) { //Don't read IMU data unless sensors are calibrated
         imu::Vector<3> accel = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);    // - m/s^2

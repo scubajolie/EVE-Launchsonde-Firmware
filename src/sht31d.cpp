@@ -1,4 +1,8 @@
 #include <Adafruit_SHT31.h>
+#include <sht31d.h>
+#include <dotstar.h>
+#include <states.h>
+#include <telemetry.h>
 
 // SHT instantiations
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
@@ -15,7 +19,7 @@ void initSHT31() {
     Serial.println("done!"); //DEBUG
 }
 
-static void pollSHT31() {
+void pollSHT31() {
     data.shtTemp = sht31.readTemperature();
     data.humidity = sht31.readHumidity();
 }

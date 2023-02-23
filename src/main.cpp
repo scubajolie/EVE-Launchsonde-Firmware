@@ -1,12 +1,25 @@
-#include "helpers/pins.h"
+#include <pins.h>
 #include <SPI.h>
 #include <SD.h>
-#include "helpers/EVEHelper.h"
+#include <EVEHelper.h>
+#include <LoRa.h>
+#include <radio.h>
+#include <dotstar.h>
 
 // ===========================
 // === PROTOTYPE FUNCTIONS ===
 // ===========================
-
+void serialError(const char * msg, int error ) {
+    Serial.printf( "ERROR [%d]: %s \n", error, msg );
+    char Error_Message [100];
+    int msgSize = strlen(msg);
+    if (msgSize>=99) {
+        sprintf(Error_Message, "ERROR [%d]: Message was too long.", error);
+    } else {
+        sprintf(Error_Message, "ERROR [%d]: %s \n", error, msg);
+    }
+    sendDiagnosticData(LogLevel(ERROR), Error_Message);
+}
 
 void setup() {
 	#ifdef DIAGNOSTIC
@@ -35,7 +48,7 @@ void setup() {
     initRadio();
     initGPS();
     // initBNO055();
-    // initBMP388(); // altimeter
+    initBMP388(); // altimeter
     initSHT31();
 
     setLaunchsondeState(STANDBY); // System initialized successfully and is awaiting sensor calibration

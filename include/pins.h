@@ -1,3 +1,6 @@
+#ifndef EVE_PINS_H
+#define EVE_PINS_H
+
 // ====================
 // === PIN MAPPINGS ===
 // ====================
@@ -18,4 +21,6 @@
     #define BNO_RST_PIN         13
     #define DOTSTAR_CLK_PIN     40
     #define DOTSTAR_DATA_PIN    41
+#endif
+
 #endif

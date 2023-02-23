@@ -1,48 +1,12 @@
-// Hardware instantiation
+#include <EVEHelper.h>
+#include <telemetry.h>
+
 const PROGMEM char UUID_FILENAME[9] = "UUID.txt";
 byte UUID = 0xFF; // Default UUID is 0xFF to indicate no UUID is set yet
 bool isUUIDConfig = false;
 const PROGMEM byte RECEIVER_UUID = 0x00; // Default receiver UUID is 0x00
 
-#define COUNTDOWN_TIME 10 // s
-#define SAMPLE_TIME 50 // ms
-#define LOG_TIME 5000 // 1 log for every 10 samples
-
-// Telemetry packet helper
-#include "telemetry.h"
-
-// Launchsonde modes helper
-#include "modes.h"
-
-// Launchsonde states helper
-#include "states.h"
-
-// DotStar helper
-#include "dotstar.h"
-
-// Logging helper
-#include "logging/logging.h"
-
-// Sensor helpers
-#include "sensors/bmp388.h"
-#include "sensors/bno055.h"
-#include "sensors/sht31d.h"
-
-// Command helper
-#include "commands.h"
-
-// Radio helpers
-#include "radio/lora.h"
-#include "radio/gps.h"
-
-// Battery helper
-#include "battery.h"
-
-// ================================
-// ===DIAGNOSTIC PRINT FUNCTIONS===
-// ================================
-
-static void printTelemetryData() {
+void printTelemetryData() {
     Serial.println("---TELEMETRY PACKET---");
     Serial.print("Battery voltage:  "); Serial.print(data.voltage);             Serial.println(" V");
     Serial.print("GPS month:        "); Serial.print(data.month);               Serial.println();
@@ -88,7 +52,7 @@ static void printTelemetryData() {
 /**
  * Prints out telemetry data in the format expected by the base station. For testing purposes only!
 */
-static void printBaseStationTelemetry() {
+void printBaseStationTelemetry() {
     // Parse timestamp
     char _buf[64];
     sprintf(_buf, "%04d-%02d-%02dT%02d:%02d:%02d.%03d", data.year, data.month, data.day, data.hour, data.minute, data.second, data.msecond);

@@ -1,14 +1,15 @@
-// FOR KEYBOARD COMMANDS (TESTING) SET ARM=0x30!
-enum Command {
-    ARM = 0x30,                        // Arm the package for launch
-    DISARM,                     // Disarm the package for safety
-    LAUNCH,                     // Ignite the motor and launch package
-    ZERO_ALT,                   // Zero the altimeter
-    CAL_IMU,                    // Load calibration data into IMU
-    RECORD_IMU,                 // Record calibration data from IMU and put it into EEPROM
-    SET_UUID,                   // Uses aditional argument to set the UUID of the instrumentation
-    ZERO_GPS                    // Zero the GPS start point (only used on ground station)
-};
+#include <stdio.h>
+#include <arduino.h>
+#include <commands.h>
+#include <states.h>
+#include <telemetry.h>
+#include <string.h>
+#include <pins.h>
+#include <EVEHelper.h>
+#include <bmp388.h>
+#include <bno055.h>
+#include <sht31d.h>
+
 
 void getCommandString(char* outStr, Command c) {
     switch (c) {
@@ -39,12 +40,12 @@ void getCommandString(char* outStr, Command c) {
     }
 }
 
-static bool checkSensorsReady() {
+bool checkSensorsReady() {
     //If GPS has positive fix, altimeter is in range of ±1m, and IMU is calibrated return true
     return data.GPSFix && (data.altitude < 1 && data.altitude > -1) && bno.isFullyCalibrated();
 }
 
-static void launch() {
+void launch() {
     if (data.state == ARMED && checkSensorsReady()) { //Check if system is armed and sensors are ready for flight
         setLaunchsondeState(LAUNCHING);
 
@@ -83,7 +84,7 @@ static void launch() {
     // }
 }
 
-static void loadIMUCalData() {
+void loadIMUCalData() {
     if (calDataLoaded) {
         bno.setSensorOffsets(offsets); // Load offset data to BNO sensor
         if (bno.isFullyCalibrated()) {
@@ -96,7 +97,7 @@ static void loadIMUCalData() {
     Serial.println("Calibration data not loaded"); //DEBUG
 }
 
-static void executeCommand(Command cmd, byte msg) {
+void executeCommand(Command cmd, byte msg) {
     switch (cmd) {
     case ARM:
         Serial.println("ARMING"); //DEBUG

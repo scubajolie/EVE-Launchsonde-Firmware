@@ -1,4 +1,8 @@
 #include <MicroNMEA.h>
+#include <gps.h>
+#include <states.h>
+#include <dotstar.h>
+#include <telemetry.h>
 
 // GPS instantiation
 HardwareSerial& gps = Serial1;
@@ -44,7 +48,7 @@ void initGPS() {
     Serial.println("done!"); //DEBUG
 }
 
-static void pollGPS() {
+void pollGPS() {
     //Parse milliseconds for timestamp
     uint8_t curSecond = nmea.getSecond();
     // Serial.println(curSecond);
