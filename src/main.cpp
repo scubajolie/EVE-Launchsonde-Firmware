@@ -1,20 +1,22 @@
 #include <stdio.h>
-#include <pins.h>
 #include <SPI.h>
 #include <SD.h>
 #include <modes.h>
 #include <dotstar.h>
 #include <commands.h>
 
+// Communication Headers
 #include <LoRa.h>
 #include <radio.h>
 #include <gps.h>
 
-
+// Sensor Board headers
+#include <pins.h>
 #include <bmp388.h>
 #include <bno055.h>
 #include <sht31d.h>
 
+// Telemetry Data Header
 #include <telemetry.h>
 
 // ===========================

@@ -14,6 +14,15 @@ enum PacketType {
     STATE_PACKET      // 4
 };
 
+const PROGMEM char UUID_FILENAME[9] = "UUID.txt";
+byte CORE_UUID = 0xAA;
+byte ROCKET1_UUID = 0xBB;
+byte ROCKET2_UUID = 0xCC;
+byte ROCKET3_UUID = 0xDD;
+byte GROUNDSTATION_UUID = 0xEE;
+bool isUUIDConfig = false;
+const PROGMEM byte RECEIVER_UUID = 0x00; // Default receiver UUID is 0x00
+
 void initRadio();
 
 /*

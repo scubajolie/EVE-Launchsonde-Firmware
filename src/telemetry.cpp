@@ -3,10 +3,7 @@
 #include <string.h>
 
 
-const PROGMEM char UUID_FILENAME[9] = "UUID.txt";
-byte UUID = 0xFF; // Default UUID is 0xFF to indicate no UUID is set yet
-bool isUUIDConfig = false;
-const PROGMEM byte RECEIVER_UUID = 0x00; // Default receiver UUID is 0x00
+
 
 Telemetry data;
 
