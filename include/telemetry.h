@@ -8,12 +8,6 @@
 #define SAMPLE_TIME 50 // ms
 #define LOG_TIME 500 // 1 log for every 10 samples
 
-extern const PROGMEM char UUID_FILENAME[9];
-extern byte UUID; // Default UUID is 0xFF to indicate no UUID is set yet
-extern bool isUUIDConfig;
-extern const PROGMEM byte RECEIVER_UUID; // Default receiver UUID is 0x00
-
-
 struct Telemetry {
     float voltage;              // Battery voltage in V
     uint8_t month;              // Month from GPS data 

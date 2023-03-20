@@ -23,9 +23,9 @@
 // === PROTOTYPE FUNCTIONS ===
 // ===========================
 void serialError(const char * msg, int error ) {
+    char Error_Message[100];
     Serial.printf( "ERROR [%d]: %s \n", error, msg );
-    char Error_Message [100];
-    int msgSize = strlen(msg);
+        int msgSize = strlen(msg);
     if (msgSize>=99) {
         sprintf(Error_Message, "ERROR [%d]: Message was too long.", error);
     } else {
@@ -75,6 +75,8 @@ void loop() {
         }
     }
 
+    sendDiagnosticData(DEBUG, "Testing Diagnostic Data Function");
+    
     // if (!isInDiagMode) { // Check if launchsonde is in FLIGHT mode
     //     if (!checkBattVoltage()) { // Check battery voltage is out of flight range (2.5-4.4 V)
     //         setLaunchsondeState(LOW_BATT);
