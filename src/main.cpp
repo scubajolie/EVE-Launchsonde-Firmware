@@ -1,3 +1,17 @@
+/**
+* PROJECT EVE
+* FLORIDA INSTITUTE OF TECHNOLOGY, OEMS DEPARTMENT
+* UNDERWATER TECHNOLOGY LABORATORY
+* Supervising Professor: Dr. Stephen Wood, Ph.D, PE
+*
+* @file   Launchsonde Firmware Version 1.1
+* @date   4/26/2023
+* @author Braidan Duffy & Jolie Elliott
+*
+* Theory of Operation:
+*/
+
+
 #include <stdio.h>
 #include <SPI.h>
 #include <SD.h>
@@ -60,7 +74,7 @@ void setup() {
 
     initRadio();
     initGPS();
-    // initBNO055();
+    // initBNO055(); // IMU
     initBMP388(); // altimeter
     initSHT31();
 

@@ -2,6 +2,7 @@
 #define EVE_BATTERY_H
 
 #include <telemetry.h>
+#include <pins.h>
 
 #define BATT_VOLTAGE_THRESHOLD 2.5 // V
 
