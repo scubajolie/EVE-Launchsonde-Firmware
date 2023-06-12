@@ -75,7 +75,7 @@ void setup() {
     initRadio();
     initGPS();
     // initBNO055(); // IMU
-    initBMP388(); // altimeter
+    // initBMP388(); // altimeter
     initSHT31();
 
     setLaunchsondeState(STANDBY); // System initialized successfully and is awaiting sensor calibration
@@ -145,4 +145,5 @@ void loop() {
         // printBaseStationTelemetry();
         delay(500); // Delay between readings
     }
+
 }

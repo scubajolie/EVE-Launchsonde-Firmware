@@ -29,10 +29,10 @@ void initGPS() {
     if (!gps) {
         Serial.println("Failed to initialize GPS"); //DEBUG
         setLaunchsondeState(GPS_FAIL);
-        while(1) { // Blocks further code execution
-            blinkCode((byte) GPS_ERROR_CODE, RED); // Blink out GPS error code
-            // sendDiagnosticData(FATAL, "Failed to initailize GPS"); // Broken, requires further testing 
-        }
+        // while(1) { // Blocks further code execution
+        //     blinkCode((byte) GPS_ERROR_CODE, RED); // Blink out GPS error code
+        //     // sendDiagnosticData(FATAL, "Failed to initailize GPS"); // Broken, requires further testing 
+        // }
     }
 	// nmea.setUnknownSentenceHandler(printUnknownSentence);
 	// Clear the list of messages which are sent.

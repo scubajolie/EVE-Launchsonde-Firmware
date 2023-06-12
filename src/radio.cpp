@@ -10,11 +10,12 @@
 const PROGMEM char UUID_FILENAME[9] = "UUID.txt";
 byte CORE_UUID = 0xAA;
 byte UUID = 0xBB; // ROCKET 1 UUID
+byte UUID_R1 = 0xBB;
+byte UUID_R2 = 0xCC; // Rocket 2
+byte UUID_R3 = 0xDD; // Rocket 3
 byte GROUNDSTATION_UUID = 0xEE;
 bool isUUIDConfig = true;
 const PROGMEM byte RECEIVER_UUID = 0x00; // Default receiver UUID is 0x00
-
-
 
 void initRadio() {
     #ifdef DIAGNOSTIC
@@ -68,7 +69,6 @@ void sendState(State_t s) {
 
 
 // TODO: DEBUG FUNCTION
-// TODO: RESEARCH LORA UUID AND PACKET HEADERS
 void radioCallback(int packetSize) {
     if (packetSize == 0) return;
 
