@@ -10,13 +10,15 @@
 const byte TELEMETRY_PACKET = 1;
 const byte COMMAND_PACKET   = 2;
 const PROGMEM char UUID_FILENAME[9] = "UUID.txt";
-byte CORE_UUID = 0xAA;
+byte CORE_UUID = 0xAA; // 8 bits signed byte: -63 to 63
 byte UUID = 0xBB; // ROCKET 1 UUID
+byte UUID_R1 = 0xBB;
+byte UUID_R2 = 0xCC; // Rocket 2
+byte UUID_R3 = 0xDD; // Rocket 3
 byte GROUNDSTATION_UUID = 0xEE;
 bool isUUIDConfig = true;
 const PROGMEM byte RECEIVER_UUID = 0x00; // Default receiver UUID is 0x00
-
-
+const byte TELEMETRY_PACKET;
 
 void initRadio() {
     #ifdef DIAGNOSTIC
@@ -68,21 +70,20 @@ void sendState(State_t s) {
 
 
 // TODO: DEBUG FUNCTION
-// TODO: RESEARCH LORA UUID AND PACKET HEADERS
 void radioCallback(int packetSize) {
-    if (packetSize == 0) return;
+    // if (packetSize == 0) return;
 
-    // 
-    byte sender = LoRa.read();
-    Serial.print(sender);  // CHANGE TO CHECK WHAT SENDER IS
-    byte destination = LoRa.read();
-    if (destination != UUID) return; // Ignore received messages if not the intended receiver
-    byte packetType = LoRa.read();
-    if (packetType != COMMAND_PACKET) return; //Ignore any packets that aren't command packets
-    byte cmdIdent = LoRa.read();
-    byte cmdMsg;
-    if (packetSize != 0) cmdMsg = LoRa.read(); // Remaining data is the command message
-    executeCommand((Command) cmdIdent, cmdMsg); // Grab command identifier from radio packet and execute appropriate command
-    //Additional processing for command messages???
+    // // 
+    // byte sender = LoRa.read();
+    // Serial.print(sender);  // CHANGE TO CHECK WHAT SENDER IS
+    // byte destination = LoRa.read();
+    // if (destination != UUID) return; // Ignore received messages if not the intended receiver
+    // byte packetType = LoRa.read();
+    // if (packetType != COMMAND_PACKET) return; //Ignore any packets that aren't command packets
+    // byte cmdIdent = LoRa.read();
+    // byte cmdMsg;
+    // if (packetSize != 0) cmdMsg = LoRa.read(); // Remaining data is the command message
+    // executeCommand((Command) cmdIdent, cmdMsg); // Grab command identifier from radio packet and execute appropriate command
+    // //Additional processing for command messages???
 }
 
