@@ -33,6 +33,7 @@
 // Telemetry Data Header
 #include <telemetry.h>
 
+
 // ===========================
 // === PROTOTYPE FUNCTIONS ===
 // ===========================
@@ -74,22 +75,22 @@ void setup() {
 
     initRadio();
     initGPS();
-    // initBNO055(); // IMU
-    // initBMP388(); // altimeter
+    initBNO055(); // IMU
+    initBMP388(); // altimeter
     initSHT31();
 
     setLaunchsondeState(STANDBY); // System initialized successfully and is awaiting sensor calibration
 }
 
 void loop() {
-    if (currentMode == DIAGNOSTIC_MODE) {
-        while (Serial.available()) { // Check for commands from the Serial terminal and execute.
-            executeCommand((Command) Serial.read(), Serial.read());
-            Serial.flush(); // Clear Serial port of remain characters
-        }
-    }
+    // if (currentMode == DIAGNOSTIC_MODE) {
+    //     while (Serial.available()) { // Check for commands from the Serial terminal and execute.
+    //         executeCommand((Command) Serial.read(), Serial.read());
+    //         Serial.flush(); // Clear Serial port of remain characters
+    //     }
+    // }
 
-    sendDiagnosticData(DEBUG, "Testing Diagnostic Data Function");
+    // sendDiagnosticData(DEBUG, "Testing Diagnostic Data Function");
     
     // if (!isInDiagMode) { // Check if launchsonde is in FLIGHT mode
     //     if (!checkBattVoltage()) { // Check battery voltage is out of flight range (2.5-4.4 V)
@@ -122,28 +123,28 @@ void loop() {
         sendTelemetryData(); // Broken, needs more testing
 	}
 
-    if(millis() > _lastLog+LOG_TIME) {
-        _lastLog = millis();
-        // msg = getLogLevelString()
-        sendDiagnosticData(TRACE, "Everything is Normal");
-    }
+    // if(millis() > _lastLog+LOG_TIME) {
+    //     _lastLog = millis();
+    //     // msg = getLogLevelString()
+    //     sendDiagnosticData(TRACE, "Everything is Normal");
+    // }
 
-    if (data.state == STANDBY && checkSensorsReady()) { // Check if sensors are calibrated
-        setLaunchsondeState(READY);
-    }
-    else {
-        // Check if state has changed
-        if (data.state != previousState) {
-            setLaunchsondeState(previousState);
-            //sendState( static_cast<State_t>( data.state ) );      // also works!!
-            sendState(State_t(data.state));
-        }
-    }
+    // if (data.state == STANDBY && checkSensorsReady()) { // Check if sensors are calibrated
+    //     setLaunchsondeState(READY);
+    // }
+    // else {
+    //     // Check if state has changed
+    //     if (data.state != previousState) {
+    //         setLaunchsondeState(previousState);
+    //         //sendState( static_cast<State_t>( data.state ) );      // also works!!
+    //         sendState(State_t(data.state));
+    //     }
+    // }
 
-    if (currentMode == DIAGNOSTIC_MODE) {
-        printTelemetryData();
-        // printBaseStationTelemetry();
-        delay(500); // Delay between readings
-    }
+    // if (currentMode == DIAGNOSTIC_MODE) {
+    //     printTelemetryData();
+    //     // printBaseStationTelemetry();
+    //     delay(500); // Delay between readings
+    // }
 
 }

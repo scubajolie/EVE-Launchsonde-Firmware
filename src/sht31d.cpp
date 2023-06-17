@@ -7,6 +7,7 @@
 // SHT instantiations
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
 
+
 void initSHT31() {
     Serial.print("Initializing SHT31...");
     if (!sht31.begin(0x44)) { // Set to 0x45 for alternate i2c addr

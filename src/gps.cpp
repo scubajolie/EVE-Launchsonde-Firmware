@@ -14,6 +14,7 @@ float lastMillis = millis();
 float curMillis = 0;
 float curMSecond = 0;
 
+
 void printUnknownSentence(const MicroNMEA& nmea) {
 	// Do nothing
 }
