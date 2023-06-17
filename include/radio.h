@@ -7,12 +7,8 @@
 #include <logging.h>
 #include <states.h>
 
-enum PacketType {
-    TELEMETRY_PACKET, // 1
-    LOG_PACKET,       // 2
-    COMMAND_PACKET,   // 3
-    STATE_PACKET      // 4
-};
+extern const byte TELEMETRY_PACKET;
+extern const byte COMMAND_PACKET;
 
 // UPDATE UUID TO CURRENT ROCKET BEFORE UPLOADING IN RADIO.CPP
 extern const PROGMEM char UUID_FILENAME[9];

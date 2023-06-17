@@ -7,6 +7,8 @@
 #include <telemetry.h>
 #include <commands.h>
 
+const byte TELEMETRY_PACKET = 1;
+const byte COMMAND_PACKET   = 2;
 const PROGMEM char UUID_FILENAME[9] = "UUID.txt";
 byte CORE_UUID = 0xAA;
 byte UUID = 0xBB; // ROCKET 1 UUID
@@ -37,8 +39,6 @@ void initRadio() {
 
 void sendTelemetryData() {
     LoRa.beginPacket();
-    LoRa.write(UUID);
-    LoRa.write(RECEIVER_UUID);
     LoRa.write(TELEMETRY_PACKET);
     LoRa.write((uint8_t*) &data, data.packetSize);
     LoRa.endPacket();
@@ -49,7 +49,7 @@ void sendDiagnosticData(LogLevel level, const char * msg) {
     LoRa.beginPacket();
     LoRa.write(UUID);
     LoRa.write(RECEIVER_UUID);
-    LoRa.write(PacketType(LOG_PACKET));    // packet type
+    // LoRa.write(PacketType(LOG_PACKET));    // packet type
     LoRa.write(LogLevel(level));   // diagnostic code
     LoRa.print(msg);            // diagnostic message
     LoRa.endPacket();
@@ -60,7 +60,7 @@ void sendState(State_t s) {
     LoRa.beginPacket();
     LoRa.write(UUID);
     LoRa.write(RECEIVER_UUID);
-    LoRa.write(STATE_PACKET);
+    // LoRa.write(STATE_PACKET);
     LoRa.write((int8_t) s);
     LoRa.endPacket();
     LoRa.receive();
